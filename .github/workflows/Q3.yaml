@@ -1,0 +1,32 @@
+name: Q3 Archive Java
+on: [push]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: push-main
+  cancel-in-progress: false
+
+jobs:
+  archive-q3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Créer Q3_archive_java.txt
+        run: |
+          if [ -f Q3.java ]; then
+            {
+              echo "Yann AGBEHONOU"
+              cat Q3.java
+            } > Q3_archive_java.txt
+          fi
+
+      - name: Commit et push
+        run: |
+          git config --global user.name "<votre_id_github>"
+          git config --global user.email "<votre_email>"
+          git add Q3_archive_java.txt
+          git diff --cached --quiet || (git commit -m "Q3: ajout Q3_archive_java.txt" && git pull --rebase && git push)
