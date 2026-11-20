@@ -1,0 +1,43 @@
+name: Q6 Archive horodatée et diff
+on: [push]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: push-main
+  cancel-in-progress: false
+
+jobs:
+  archive-q6:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Créer Q6_archive_date.txt et Q6_différences.txt
+        run: |
+          if [ -f Q6.java ]; then
+            PREV=$(ls Q6_archive_*.txt 2>/dev/null | awk -F'[_.-]' '{print $5$4$3$6, $0}' | sort -r | head -n 1 | cut -d' ' -f2-)
+            DATE=$(date +%d-%m-%Y-%H%M%S)
+            NEW="Q6_archive_${DATE}.txt"
+
+            {
+              echo "Yann AGBEHONOU"
+              echo "Taille (lignes caractères) : $(wc -lm Q6.java)"
+              cat Q6.java
+            } > "$NEW"
+
+            if [ -n "$PREV" ] && [ -f "$PREV" ]; then
+              diff "$PREV" "$NEW" > "Q6_différences.txt" || true
+            else
+              echo "Aucun fichier d'archive précédent à comparer." > "Q6_différences.txt"
+            fi
+          fi
+
+      - name: Commit et push
+        run: |
+          git config --global user.name "<votre_id_github>"
+          git config --global user.email "<votre_email>"
+          git add Q6_archive_*.txt "Q6_différences.txt"
+          git diff --cached --quiet || (git commit -m "Q6: archive et différences" && git pull --rebase && git push)
