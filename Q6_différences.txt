@@ -1,0 +1,8 @@
+2c2
+< Taille (lignes caractères) :  16 429 Q6.java
+---
+> Taille (lignes caractères) :  18 512 Q6.java
+5a6
+>         // modification pour tester diff Q6
+6a8
+>             // dernier test de Q6 diff
