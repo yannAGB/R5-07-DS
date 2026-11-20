@@ -3,6 +3,7 @@ public class Q6 {
         //test diff
         // modification pour tester diff Q6
         if (args.length < 1) {
+            // dernier test de Q6 diff
             System.out.println("Usage : java Q6 <N>");
             return;
         }
