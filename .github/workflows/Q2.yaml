@@ -31,7 +31,7 @@ jobs:
 
       - name: Commit et push
         run: |
-          git config --global user.name "<yannAGB>"
-          git config --global user.email "<yannagbehonou@gmail.com>"
+          git config --global user.name "yannAGB"
+          git config --global user.email "yannagbehonou@gmail.com"
           git add Q2_archive_XYZ.txt
           git diff --cached --quiet || (git commit -m "Q2: ajout Q2_archive_XYZ.txt" && git pull --rebase && git push)
