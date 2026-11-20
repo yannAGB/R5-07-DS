@@ -1,0 +1,29 @@
+name: Q1 Archive XYZ
+on: [push]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: push-main
+  cancel-in-progress: false
+
+jobs:
+  archive-q1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Créer Q1_archive_XYZ.txt
+        run: |
+          if [ -f XYZ.txt ]; then
+            cp XYZ.txt Q1_archive_XYZ.txt
+          fi
+
+      - name: Commit et push
+        run: |
+          git config --global user.name "<votre_id_github>"
+          git config --global user.email "<votre_email>"
+          git add Q1_archive_XYZ.txt
+          git diff --cached --quiet || (git commit -m "Q1: ajout Q1_archive_XYZ.txt" && git pull --rebase && git push)
