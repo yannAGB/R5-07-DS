@@ -1,6 +1,7 @@
 public class Q6 {
     public static void main(String[] args) {
         //test diff
+        // modification pour tester diff Q6
         if (args.length < 1) {
             System.out.println("Usage : java Q6 <N>");
             return;
