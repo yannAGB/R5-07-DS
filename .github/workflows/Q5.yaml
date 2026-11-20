@@ -1,0 +1,34 @@
+name: Q5 Archive Java datée
+on: [push]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: push-main
+  cancel-in-progress: false
+
+jobs:
+  archive-q5:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Créer Q5_archive_date.txt
+        run: |
+          if [ -f Q5.java ]; then
+            DATE=$(date +%d-%m-%Y)
+            FICHIER="Q5_archive_${DATE}.txt"
+            {
+              echo "Yann AGBEHONOU"
+              cat Q5.java
+            } > "$FICHIER"
+          fi
+
+      - name: Commit et push
+        run: |
+          git config --global user.name "<votre_id_github>"
+          git config --global user.email "<votre_email>"
+          git add Q5_archive_*.txt
+          git diff --cached --quiet || (git commit -m "Q5: ajout archive datée" && git pull --rebase && git push)
