@@ -1,0 +1,7 @@
+Yann AGBEHONOU
+Date d'exécution : 20/11/2026 15:28:02
+--- Contenu de XYZ.txt ---
+Contenu de test pour le DS R5.07.
+
+--- Taille de XYZ.txt ---
+34 XYZ.txt
