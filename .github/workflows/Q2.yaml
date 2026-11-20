@@ -1,0 +1,37 @@
+name: Q2 Archive XYZ complet
+on: [push]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: push-main
+  cancel-in-progress: false
+
+jobs:
+  archive-q2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Créer Q2_archive_XYZ.txt
+        run: |
+          if [ -f XYZ.txt ]; then
+            {
+              echo "Yann AGBEHONOU"
+              echo "Date d'exécution : $(date '+%d/%m/%Y %H:%M:%S')"
+              echo "--- Contenu de XYZ.txt ---"
+              cat XYZ.txt
+              echo ""
+              echo "--- Taille de XYZ.txt ---"
+              wc -c XYZ.txt
+            } > Q2_archive_XYZ.txt
+          fi
+
+      - name: Commit et push
+        run: |
+          git config --global user.name "<votre_id_github>"
+          git config --global user.email "<votre_email>"
+          git add Q2_archive_XYZ.txt
+          git diff --cached --quiet || (git commit -m "Q2: ajout Q2_archive_XYZ.txt" && git pull --rebase && git push)
